@@ -1,0 +1,10 @@
+fieldset.treatment-tabs{border-top:0;border-left:0;border-right:0;min-width:0;padding-left:0;padding-right:0;margin-left:0;margin-right:0}
+.booking-modal{color:var(--ink);border:1px solid var(--rule);margin:auto;max-width:calc(100vw - 30px)}
+.booking-modal::backdrop,.photo-dialog::backdrop{background:#241b24a6;backdrop-filter:blur(7px)}
+.photo-dialog{border:0;border-radius:5px;background:var(--cream);padding:12px;max-width:92vw;max-height:94vh;margin:auto;color:var(--ink)}
+.photo-dialog>img{max-height:80vh;max-width:85vw;object-fit:contain}
+.photo-dialog>p{font-size:11px;text-align:center;margin-top:10px}
+.photo-dialog .close-button{right:18px;top:18px}
+@media(max-width:780px){.booking-modal{max-height:92vh}}
+@media(max-width:780px){.header{gap:12px}.header .brand{flex-shrink:0}.header .brand>span{white-space:nowrap;font-size:27px}.header .brand small{letter-spacing:1.7px}.header-cta{white-space:nowrap;padding:12px 14px;gap:10px}}
+@media(max-width:430px){h1{font-size:64px;line-height:.98}.hero-copy>p{margin-top:20px}.headline-sparkle{margin-left:35px}}

@@ -1,0 +1,25 @@
+import { useState } from 'react';
+import { ArrowUpRight, Plus, Minus, Clock3, Search, ArrowLeft, ArrowRight } from 'lucide-react';
+import { services, categories, formatPrice, menuSource, menuCheckedOn } from '../../shared/catalog';
+
+export default function TreatmentMenu({ onBook }: { onBook: (name: string) => void }) {
+  const [category, setCategory] = useState('All treatments');
+  const [search, setSearch] = useState('');
+  const [sort, setSort] = useState('price-low');
+  const [page, setPage] = useState(1);
+  const [expanded, setExpanded] = useState<string | null>(null);
+  const filtered = services.filter(s => (category === 'All treatments' || s.category === category) && s.name.toLowerCase().includes(search.toLowerCase())).sort((a,b) => sort === 'price-high' ? b.price-a.price : sort === 'name' ? a.name.localeCompare(b.name) : a.price-b.price);
+  const pageCount = Math.max(1, Math.ceil(filtered.length/6));
+  const shown = filtered.slice((page-1)*6,page*6);
+  const changePage = (n: number) => { setPage(n); document.getElementById('menu-results')?.scrollIntoView({block:'start',behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'}); };
+  return <section id="treatments" className="section treatments">
+    <div className="section-heading"><div><span className="eyebrow">THE TREATMENT EDIT · {services.length} SERVICES</span><h2>Whatever you need.<br/><em>However you glow.</em></h2></div><div className="heading-aside"><p>Real treatments. Clearly listed prices.<br/>Find your moment of care.</p><a className="text-link" href={menuSource} target="_blank" rel="noreferrer">View the original service menu <ArrowUpRight size={16}/></a></div></div>
+    <fieldset className="treatment-tabs" aria-label="Filter treatments">{categories.map(c => <button key={c} className={category===c?'selected':''} aria-pressed={category===c} onClick={()=>{setCategory(c);setPage(1);}}>{c}{c==='All treatments'&&<span>{services.length}</span>}</button>)}</fieldset>
+    <div className="menu-toolbar"><div className="menu-search"><Search size={16}/><input aria-label="Search treatments" placeholder="Find a haircut, facial or massage…" value={search} onChange={e=>{setSearch(e.target.value);setPage(1);}}/></div><label className="menu-sort">Sort by<select aria-label="Sort treatments" value={sort} onChange={e=>{setSort(e.target.value);setPage(1);}}><option value="price-low">Price: low to high</option><option value="price-high">Price: high to low</option><option value="name">Name: A–Z</option></select></label></div>
+    <p className="menu-result-count" role="status">{filtered.length ? `${(page-1)*6+1}–${Math.min(page*6,filtered.length)} of ${filtered.length} treatments` : 'No treatments match your search'}</p>
+    <div id="menu-results" className="service-grid">{shown.map(s=><article className="service-card" key={s.name}><div className="service-image"><img src={s.image} alt={s.name + ' — image from Tinwa Glow’s service menu'} loading="lazy"/><span>{s.category}</span><button aria-label={`Request ${s.name}`} onClick={()=>onBook(s.name)}><ArrowUpRight size={22}/></button></div><div className="service-body"><span className="eyebrow">{s.tag}</span><h3>{s.name}</h3><div className="service-price-row"><strong>{formatPrice(s.price)}</strong><span><Clock3 size={13}/>{s.minutes} min</span></div><p>{s.description}</p>{expanded===s.name&&<div className="service-detail"><p>{s.details}</p><a className="text-link" href={s.source} target="_blank" rel="noreferrer">View source listing <ArrowUpRight size={13}/></a></div>}<div className="service-bottom"><button className="text-link" onClick={()=>onBook(s.name)}>Request a treatment <ArrowUpRight size={15}/></button><button className="detail-toggle" aria-label={`Details for ${s.name}`} aria-expanded={expanded===s.name} onClick={()=>setExpanded(expanded===s.name?null:s.name)}>{expanded===s.name?<Minus size={17}/>:<Plus size={17}/>}</button></div></div></article>)}</div>
+    {!filtered.length&&<div className="menu-empty"><p>Try another treatment name or category.</p><button className="button outline" onClick={()=>{setSearch('');setCategory('All treatments');setPage(1);}}>Show all treatments</button></div>}
+    {pageCount>1&&<nav className="menu-pagination" aria-label="Treatment pages"><button aria-label="Previous treatment page" disabled={page===1} onClick={()=>changePage(page-1)}><ArrowLeft size={16}/></button>{Array.from({length:pageCount},(_,i)=>i+1).map(n=><button key={n} aria-label={`Treatment page ${n}`} aria-current={page===n?'page':undefined} className={page===n?'selected':''} onClick={()=>changePage(n)}>{n}</button>)}<button aria-label="Next treatment page" disabled={page===pageCount} onClick={()=>changePage(page+1)}><ArrowRight size={16}/></button></nav>}
+    <p className="treatment-note">Prices and durations copied from <a href={menuSource} target="_blank" rel="noreferrer">Tinwa Glow’s published service menu</a> · {menuCheckedOn}. Prices are in new leones (NLe). Confirm availability and final treatment details with the salon.</p>
+  </section>;
+}
