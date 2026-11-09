@@ -26,10 +26,10 @@ export default function Home() {
   const [faq, setFaq] = useState<number | null>(0);
   const [gallery, setGallery] = useState<number | null>(null);
   const galleryImages = [
-    { src: "/images/hero.jpg", title: "A moment to reset" },
-    { src: "/images/nails.jpg", title: "Beauty in the details" },
-    { src: "/images/grooming.jpg", title: "Your everyday confidence" },
-    { src: "/images/massage.jpg", title: "Time to unwind" },
+    { src: "/images/menu/09.jpg", title: "Fruit facial care" },
+    { src: "/images/menu/04.jpg", title: "Women’s hair styling" },
+    { src: "/images/menu/02.jpg", title: "Men’s hair grooming" },
+    { src: "/images/menu/11.jpg", title: "Deep tissue massage" },
   ];
   return (
     <>
@@ -119,8 +119,8 @@ export default function Home() {
           <div className="hero-visual">
             <img
               className="hero-image"
-              src="/images/hero.jpg"
-              alt="A woman relaxing with a facial treatment"
+              src="/images/menu/09.jpg"
+              alt="Fruit facial treatment from Tinwa Glow’s published service menu"
               fetchPriority="high"
             />
             <div className="image-corner">
@@ -160,8 +160,8 @@ export default function Home() {
         <section id="story" className="story-section">
           <div className="story-image">
             <img
-              src="/images/massage.jpg"
-              alt="A relaxing massage treatment, from the existing website"
+              src="/images/menu/12.jpg"
+              alt="Aroma full body massage from Tinwa Glow’s published service menu"
               loading="lazy"
             />
             <div className="story-image-label">
