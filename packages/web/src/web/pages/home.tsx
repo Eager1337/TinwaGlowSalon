@@ -13,18 +13,16 @@ import {
   ChevronDown,
   MessageCircle,
   Plus,
-  Minus,
 } from "lucide-react";
 import Booking from "../components/booking";
+import TreatmentMenu from "../components/treatment-menu";
 import Lightbox from '../components/lightbox';
-import { services, faqs, mapUrl, phone, whatsapp } from "../lib/content";
+import { faqs, mapUrl, phone, whatsapp } from "../lib/content";
 
 export default function Home() {
   const [booking, setBooking] = useState<string | null>(null);
   const close = useCallback(() => setBooking(null), []);
   const [menu, setMenu] = useState(false);
-  const [category, setCategory] = useState("All treatments");
-  const [expanded, setExpanded] = useState<string | null>(null);
   const [faq, setFaq] = useState<number | null>(0);
   const [gallery, setGallery] = useState<number | null>(null);
   const galleryImages = [
@@ -158,94 +156,7 @@ export default function Home() {
             <MapPin size={19} strokeWidth={1.2} /> In the heart of Lumley
           </span>
         </div>
-        <section id="treatments" className="section treatments">
-          <div className="section-heading">
-            <div>
-              <span className="eyebrow">THE TREATMENT EDIT</span>
-              <h2>
-                Whatever you need.
-                <br />
-                <em>However you glow.</em>
-              </h2>
-            </div>
-            <div className="heading-aside">
-              <p>
-                A refresh. A reset. A whole new look.
-                <br />
-                Find a little something just for you.
-              </p>
-              <a
-                className="text-link"
-                href={
-                  whatsapp +
-                  "?text=" +
-                  encodeURIComponent(
-                    "Hello Tinwa Glow! Could you share your current treatment menu and prices?",
-                  )
-                }
-                target="_blank"
-                rel="noreferrer"
-              >
-                Ask for the full menu <ArrowUpRight size={16} />
-              </a>
-            </div>
-          </div>
-          <fieldset className="treatment-tabs" aria-label="Filter treatments">
-            {["All treatments", "Hair & grooming", "Spa & wellness", "Nails", "Beauty"].map((c) => (
-              <button
-                className={category === c ? "selected" : ""}
-                aria-pressed={category === c}
-                onClick={() => setCategory(c)}
-                key={c}
-              >
-                {c}
-                {c === "All treatments" && <span>06</span>}
-              </button>
-            ))}
-          </fieldset>
-          <div className="service-grid">
-            {services
-              .filter((s) => category === "All treatments" || category === s.category)
-              .map((s) => (
-                <article className="service-card" key={s.name}>
-                  <div className="service-image">
-                    <img
-                      src={s.name === "Manicure & pedicure" ? "/images/nails.jpg" : s.image}
-                      alt={`${s.name} — illustrative treatment photography`}
-                      loading="lazy"
-                    />
-                    <span>{s.category}</span>
-                    <button aria-label={`Request ${s.name}`} onClick={() => setBooking(s.name)}>
-                      <ArrowUpRight size={22} />
-                    </button>
-                  </div>
-                  <div className="service-body">
-                    <span className="eyebrow">{s.tag}</span>
-                    <h3>{s.name}</h3>
-                    <p>{s.description}</p>
-                    {expanded === s.name && <p className="service-detail">{s.details}</p>}
-                    <div className="service-bottom">
-                      <button className="text-link" onClick={() => setBooking(s.name)}>
-                        Request a treatment <ArrowUpRight size={15} />
-                      </button>
-                      <button
-                        className="detail-toggle"
-                        aria-label={`Details for ${s.name}`}
-                        aria-expanded={expanded === s.name}
-                        onClick={() => setExpanded(expanded === s.name ? null : s.name)}
-                      >
-                        {expanded === s.name ? <Minus size={17} /> : <Plus size={17} />}
-                      </button>
-                    </div>
-                  </div>
-                </article>
-              ))}
-          </div>
-          <p className="treatment-note">
-            Your treatment, tailored to you. Ask the team for current prices, options and
-            availability.
-          </p>
-        </section>
+        <TreatmentMenu onBook={(name) => setBooking(name)} />
         <section id="story" className="story-section">
           <div className="story-image">
             <img
