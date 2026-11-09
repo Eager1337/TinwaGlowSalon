@@ -239,8 +239,7 @@ export default function Home() {
             ))}
           </div>
           <p className="small photo-note">
-            Treatment inspiration, not a verified portfolio. Images from the existing website and
-            Unsplash; replace with approved salon photography before launch.
+            Service photography sourced from Tinwa Glow’s published service menu.
           </p>
         </section>
         <section id="reviews" className="reviews-section">
