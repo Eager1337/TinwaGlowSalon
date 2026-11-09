@@ -26,10 +26,10 @@ export default function Home() {
   const [faq, setFaq] = useState<number | null>(0);
   const [gallery, setGallery] = useState<number | null>(null);
   const galleryImages = [
-    { src: "/images/menu/09.jpg", title: "Fruit facial care" },
-    { src: "/images/menu/04.jpg", title: "Women’s hair styling" },
-    { src: "/images/menu/02.jpg", title: "Men’s hair grooming" },
-    { src: "/images/menu/11.jpg", title: "Deep tissue massage" },
+    { src: "/images/menu/09-original.jpg", title: "Fruit facial care" },
+    { src: "/images/menu/04-original.png", title: "Women’s hair styling" },
+    { src: "/images/menu/02-original.jpg", title: "Men’s hair grooming" },
+    { src: "/images/menu/11-original.jpg", title: "Deep tissue massage" },
   ];
   return (
     <>
@@ -119,7 +119,7 @@ export default function Home() {
           <div className="hero-visual">
             <img
               className="hero-image"
-              src="/images/menu/09.jpg"
+              src="/images/menu/09-original.jpg"
               alt="Fruit facial treatment from Tinwa Glow’s published service menu"
               fetchPriority="high"
             />
@@ -160,7 +160,7 @@ export default function Home() {
         <section id="story" className="story-section">
           <div className="story-image">
             <img
-              src="/images/menu/12.jpg"
+              src="/images/menu/12-original.jpg"
               alt="Aroma full body massage from Tinwa Glow’s published service menu"
               loading="lazy"
             />
